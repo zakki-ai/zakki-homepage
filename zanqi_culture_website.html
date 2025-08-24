@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>赞启文化(Zakki) - AI驱动的多元化创新企业</title>
+    <meta name="description" content="赞启文化(Zakki)致力于AI技术的多元化应用，涵盖影视、游戏、教育、医疗、艺术和实验室研发等领域">
+    <meta name="keywords" content="Zakki,赞启,AI影视,AI游戏,AI教育,AI医疗,AI艺术,AI实验室">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            padding: 15px 0;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+        }
+
+        .logo-text {
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        .nav-dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(15px);
+            min-width: 200px;
+            border-radius: 10px;
+            padding: 15px 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .nav-dropdown:hover .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 10px 20px;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+        }
+
+        /* 移动端菜单 */
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .mobile-menu span {
+            width: 25px;
+            height: 3px;
+            background: #fff;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* 主页横幅 */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)" /></svg>');
+            animation: moveGrid 30s linear infinite;
+        }
+
+        @keyframes moveGrid {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(20px, 20px); }
+        }
+
+        .hero-content {
+            text-align: center;
+            color: white;
+            z-index: 2;
+            max-width: 1000px;
+            padding: 0 30px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: slideUp 1s ease forwards;
+            font-weight: 700;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: slideUp 1s ease 0.2s forwards;
+            font-weight: 300;
+        }
+
+        .hero .description {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: slideUp 1s ease 0.4s forwards;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: slideUp 1s ease 0.6s forwards;
+        }
+
+        .cta-button {
+            padding: 18px 35px;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        .cta-button.primary {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+        }
+
+        .cta-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 业务分支展示 */
+        .branches {
+            padding: 100px 0;
+            background: #f8fafc;
+            position: relative;
+        }
+
+        .branches::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 49%, rgba(102, 126, 234, 0.05) 50%, transparent 51%);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        .section-subtitle {
+            font-size: 1.3rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .branches-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .branch-card {
+            background: linear-gradient(135deg, #fff 0%, #f8fafc 100%);
+            padding: 50px 40px;
+            border-radius: 25px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+        }
+
+        .branch-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .branch-card:hover::before {
+            left: 100%;
+        }
+
+        .branch-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .branch-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .branch-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .branch-card p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .branch-link {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .branch-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        /* 不同分支的特色颜色 */
+        .film .branch-icon { background: linear-gradient(135deg, #ff6b6b, #ffa726); }
+        .game .branch-icon { background: linear-gradient(135deg, #4ecdc4, #44a08d); }
+        .education .branch-icon { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .medical .branch-icon { background: linear-gradient(135deg, #f093fb, #f5576c); }
+        .art .branch-icon { background: linear-gradient(135deg, #ffecd2, #fcb69f); }
+        .lab .branch-icon { background: linear-gradient(135deg, #a8edea, #fed6e3); }
+
+        /* 公司介绍 */
+        .about {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .about::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60"><defs><pattern id="dots" width="60" height="60" patternUnits="userSpaceOnUse"><circle cx="30" cy="30" r="2" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="60" height="60" fill="url(%23dots)" /></svg>');
+        }
+
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .about-text p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* 联系我们 */
+        .contact {
+            padding: 100px 0;
+            background: #1a1a1a;
+            color: white;
+            position: relative;
+        }
+
+        .contact-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .contact-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .contact-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .contact-item h4 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        /* 页脚 */
+        .footer {
+            background: #000;
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #667eea;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1024px) {
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 50px;
+                text-align: center;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.95);
+                flex-direction: column;
+                padding: 30px 20px;
+                gap: 20px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.3rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .branches-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+
+        /* 滚动指示器 */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            z-index: 1001;
+            transition: width 0.1s ease;
+        }
+
+        /* 浮动粒子 */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 滚动进度指示器 -->
+    <div class="scroll-indicator"></div>
+
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">Z</div>
+                <div class="logo-text">赞启文化</div>
+            </a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#home">首页</a></li>
+                <li class="nav-dropdown">
+                    <a href="#branches">业务分支</a>
+                    <div class="dropdown-content">
+                        <a href="film.html">赞启影视</a>
+                        <a href="game.html">赞启游戏</a>
+                        <a href="education.html">赞启教育</a>
+                        <a href="medical.html">赞启医疗</a>
+                        <a href="art.html">赞启艺术</a>
+                        <a href="lab.html">赞启实验室</a>
+                    </div>
+                </li>
+                <li><a href="#about">关于我们</a></li>
+                <li><a href="#contact">联系我们</a></li>
+            </ul>
+            <div class="mobile-menu" id="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主页横幅 -->
+    <section id="home" class="hero">
+        <div class="particles"></div>
+        <div class="hero-content">
+            <h1>赞启文化 Zakki</h1>
+            <div class="subtitle">AI驱动的多元化创新企业</div>
+            <div class="description">
+                我们致力于将人工智能技术融入各个垂直领域，通过六大业务分支为客户提供前沿的AI解决方案，推动行业创新与变革
+            </div>
+            <div class="cta-buttons">
+                <a href="#branches" class="cta-button primary">探索业务</a>
+                <a href="#contact" class="cta-button secondary">联系合作</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 业务分支 -->
+    <section id="branches" class="branches">
+        <div class="section-header">
+            <h2 class="section-title">六大业务分支</h2>
+            <p class="section-subtitle">基于AI技术的多元化布局，为不同行业提供专业的人工智能解决方案</p>
+        </div>
+        
+        <div class="branches-grid">
+            <div class="branch-card film">
+                <div class="branch-icon">🎬</div>
+                <h3>赞启影视</h3>
+                <p>运用AI技术革新影视制作流程，提供智能剧本创作、虚拟演员、智能剪辑、视觉特效等全方位影视制作服务，为传统影视行业注入科技创新力量。</p>
+                <a href="film.html" class="branch-link">了解详情</a>
+            </div>
+
+            <div class="branch-card game">
+                <div class="branch-icon">🎮</div>
+                <h3>赞启游戏</h3>
+                <p>AI驱动的游戏开发与运营平台，提供智能NPC、程序化内容生成、玩家行为分析、游戏平衡调优等服务，打造下一代智能游戏体验。</p>
+                <a href="game.html" class="branch-link">了解详情</a>
+            </div>
+
+            <div class="branch-card education">
+                <div class="branch-icon">📚</div>
+                <h3>赞启教育</h3>
+                <p>个性化AI教育解决方案，包括智能课程推荐、自适应学习系统、AI虚拟教师、学习效果评估等，为教育行业提供智能化升级服务。</p>
+                <a href="education.html" class="branch-link">了解详情</a>
+            </div>
+
+            <div class="branch-card medical">
+                <div class="branch-icon">🏥</div>
+                <h3>赞启医疗</h3>
+                <p>AI医疗健康服务平台，专注于医学影像分析、疾病诊断辅助、药物研发加速、健康管理预测等领域，助力医疗行业智能化转型。</p>
+                <a href="medical.html" class="branch-link">了解详情</a>
+            </div>
+
+            <div class="branch-card art">
+                <div class="branch-icon">🎨</div>
+                <h3>赞启艺术</h3>
+                <p>AI艺术创作与文化传承平台，提供AI绘画、音乐创作、数字艺术品生成、传统文化数字化保护等服务，探索AI与艺术结合的无限可能。</p>
+                <a href="art.html" class="branch-link">了解详情</a>
+            </div>
+
+            <div class="branch-card lab">
+                <div class="branch-icon">🔬</div>
+                <h3>赞启实验室</h3>
+                <p>前沿AI技术研发中心，专注于基础模型研究、算法优化、新兴技术探索和产业化应用，为各业务分支提供核心技术支撑。</p>
+                <a href="lab.html" class="branch-link">了解详情</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于我们 -->
+    <section id="about" class="about">
+        <div class="about-content">
+            <div class="about-text">
+                <h2>关于赞启文化</h2>
+                <p>赞启文化(Zakki)成立于AI技术蓬勃发展的时代，我们相信人工智能不仅是技术工具，更是推动各行各业创新发展的核心驱动力。</p>
+                <p>通过六大业务分支的战略布局，我们将AI技术深度融入影视、游戏、教育、医疗、艺术和实验研发等领域，为客户提供专业、前沿、可靠的AI解决方案。</p>
+                <p>我们的使命是让AI技术真正服务于人类社会的进步，用创新驱动未来，用智能创造价值。</p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">业务分支</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">合作伙伴</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">AI专家</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">1000+</div>
+                    <div class="stat-label">成功案例</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section id="contact" class="contact">
+        <div class="contact-content">
+            <h2>联系我们</h2>
+            <p>让我们共同探索AI技术的无限可能，携手创造智能化未来</p>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">📧</div>
+                    <h4>邮箱联系</h4>
+                    <p>info@zakki.ai<br>business@zakki.ai</p>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">📱</div>
+                    <h4>电话咨询</h4>
+                    <p>+86 400-888-9999<br>工作日 9:00-18:00</p>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">📍</div>
+                    <h4>总部地址</h4>
+                    <p>中国·上海·浦东新区<br>张江高科技园区AI大厦</p>
+                </div>
+            </div>
+        </div>
+    
